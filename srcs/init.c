@@ -2,6 +2,11 @@
 
 int	init_data(t_data *data, int argc, char **argv)
 {
+    struct timeval tv;
+
+    gettimeofday(&tv,NULL);
+    data->start_time = tv.tv_sec * 1000000 + tv.tv_usec;
+    data->one_is_dead = false;
 	data->number_of_philo = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
@@ -35,18 +40,35 @@ int init_philosophers(t_data *data)
         data->philo[i].time_to_die = &data->time_to_die;
         data->philo[i].time_to_eat = &data->time_to_eat;
         data->philo[i].time_to_sleep = &data->time_to_sleep;
+        data->philo[i].start_time = &data->start_time;
+        data->philo[i].nb_forks = 0;
+        data->philo[i].is_not_eating = true;
         printf("Philosopher %d has been initialized\n", i);
         i++;
     }
     return(EXIT_SUCCESS);
 }
 
+int init_mutex(t_data *data)
+{
+    int i;
+
+    i = 0;
+    pthread_mutex_init(&data->message, NULL);
+    while (i < data->number_of_philo)
+    {
+        data->philo[i].message = &data->message;
+        printf("Message %d has been initialized\n", i);
+        i++;
+    }
+    return(EXIT_SUCCESS);
+}
 int init_fork(t_data *data)
 {
     int i;
 
     i = 0;
-    while (i < data->number_of_philo - 1)
+    while (i < data->number_of_philo)
     {
         pthread_mutex_init(&data->forks[i], NULL);
         printf("Fork %d has been initialized\n", i);
@@ -78,6 +100,11 @@ int ft_init(t_data *data, int argc, char **argv)
     if (init_fork(data))
     {
         printf("Error: fork failed\n");
+        return (EXIT_FAILURE);
+    }
+    if (init_mutex(data))
+    {
+        printf("Error: mutex failed\n");
         return (EXIT_FAILURE);
     }
     return(EXIT_SUCCESS);
