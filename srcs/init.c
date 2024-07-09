@@ -5,7 +5,7 @@ int	init_data(t_data *data, int argc, char **argv)
     struct timeval tv;
 
     gettimeofday(&tv,NULL);
-    data->start_time = tv.tv_sec * 1000000 + tv.tv_usec;
+    data->start_time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
     data->one_is_dead = false;
 	data->number_of_philo = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
@@ -43,7 +43,9 @@ int init_philosophers(t_data *data)
         data->philo[i].start_time = &data->start_time;
         data->philo[i].nb_forks = 0;
         data->philo[i].is_not_eating = true;
-        printf("Philosopher %d has been initialized\n", i);
+        data->philo[i].nbr_of_times_eat = &data->nbr_of_times_eat;
+        data->philo[i].end = &data->end;
+        //printf("Philosopher %d has been initialized\n", i);
         i++;
     }
     return(EXIT_SUCCESS);
@@ -58,7 +60,7 @@ int init_mutex(t_data *data)
     while (i < data->number_of_philo)
     {
         data->philo[i].message = &data->message;
-        printf("Message %d has been initialized\n", i);
+        //printf("Message %d has been initialized\n", i);
         i++;
     }
     return(EXIT_SUCCESS);
@@ -71,7 +73,7 @@ int init_fork(t_data *data)
     while (i < data->number_of_philo)
     {
         pthread_mutex_init(&data->forks[i], NULL);
-        printf("Fork %d has been initialized\n", i);
+        //printf("Fork %d has been initialized\n", i);
         i++;
     }
     i = 0;

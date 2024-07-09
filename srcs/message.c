@@ -24,7 +24,7 @@ int	message(t_philosopher *philo, char *msg)
         return (EXIT_FAILURE);
     }
     gettimeofday(&tv, NULL);
-	printf("%ld Philosopher %d %s\n", (tv.tv_sec * 1000000 + tv.tv_usec - *philo->start_time), philo->id, msg);
+	printf("%ld Philosopher %d %s\n", (tv.tv_sec * 1000 + tv.tv_usec / 1000 - *philo->start_time), philo->id, msg);
 	pthread_mutex_unlock(philo->message);
 	return (EXIT_SUCCESS);
 }
