@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:58:07 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/10 17:29:18 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/10 18:51:45 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,9 @@ int	eating(void *philo_ptr)
 	if (end_is_true_philo(philo) == true)
 		return (EXIT_SUCCESS);
 	take_forks(philo);
+	pthread_mutex_lock(&philo->time_of_last_meal_mutex);
 	philo->time_of_last_meal = custom_time();
+	pthread_mutex_unlock(&philo->time_of_last_meal_mutex);
 	mutex_is_not_eating(philo, false);
 	message(philo, "is eating");
 	custom_sleep_eating(philo);

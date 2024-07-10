@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:58:51 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/10 16:22:54 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/10 18:53:36 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,26 @@ int	dead_philo(t_data *data)
 	int				i;
 	long			time;
 
-	i = 0;
-	while (i < data->number_of_philo)
+	i = -1;
+	while (++i < data->number_of_philo)
 	{
 		pthread_mutex_lock(&data->philo[i].is_not_eating_mutex);
 		if (data->philo[i].is_not_eating == true)
 		{
 			pthread_mutex_unlock(&data->philo[i].is_not_eating_mutex);
 			time = custom_time();
+			pthread_mutex_lock(&data->philo[i].time_of_last_meal_mutex);
 			if (time - data->philo[i].time_of_last_meal > data->time_to_die)
 			{
 				message(&data->philo[i], "died");
 				mutex_end(&data->philo[i], true);
+				pthread_mutex_unlock(&data->philo[i].time_of_last_meal_mutex);
 				return (EXIT_FAILURE);
 			}
+			pthread_mutex_unlock(&data->philo[i].time_of_last_meal_mutex);
 		}
 		else
 			pthread_mutex_unlock(&data->philo[i].is_not_eating_mutex);
-		i++;
 	}
 	return (EXIT_SUCCESS);
 }
