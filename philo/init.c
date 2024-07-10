@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:58:22 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/10 16:06:27 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/10 16:22:23 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	init_data(t_data *data, int argc, char **argv)
 {
-	struct timeval	tv;
-
 	data->start_time = custom_time();
 	if (intput_check(argc, argv) == EXIT_FAILURE)
 	{

@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:58:07 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/10 16:06:19 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/10 16:22:15 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	take_forks(t_philosopher *philo)
 int	eating(void *philo_ptr)
 {
 	t_philosopher	*philo;
-	struct timeval	tv;
 
 	philo = (t_philosopher *)philo_ptr;
 	if (end_is_true_philo(philo) == true)

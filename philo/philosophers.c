@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:58:51 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/10 16:06:44 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/10 16:22:54 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	dead_philo(t_data *data)
 {
 	int				i;
-	struct timeval	tv;
 	long			time;
 
 	i = 0;
@@ -43,7 +42,6 @@ int	dead_philo(t_data *data)
 void	*living_philo(void *philosopher)
 {
 	t_philosopher	*philo;
-	int				j;
 
 	philo = (t_philosopher *)philosopher;
 	while (end_is_true_philo(philo) == false)
@@ -74,8 +72,6 @@ void	check_end(t_data *data)
 int	philosophers(t_data *data)
 {
 	int	i;
-	int	j;
-	int	all_meals;
 
 	i = 0;
 	while (i < data->number_of_philo)

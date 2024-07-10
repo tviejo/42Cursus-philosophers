@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:58:29 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/10 16:06:34 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/10 16:34:25 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,12 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	}
 	if (ft_init(&data, argc, argv) == EXIT_FAILURE)
-	{
-		printf("Error: ft_init failed\n");
 		return (EXIT_FAILURE);
-	}
-	if (philosophers(&data) == EXIT_FAILURE)
+	if (data.number_of_philo == 1)
+		simu_one(&data);
+	else if (philosophers(&data) == EXIT_FAILURE)
 	{
-		printf("Error: start_simulation failed\n");
+		printf("Error: simulation failed\n");
 		return (EXIT_FAILURE);
 	}
 	ft_close(&data);

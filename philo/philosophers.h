@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:04:55 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/10 16:08:05 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/10 16:36:15 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,6 @@ void				mutex_nbr_of_meals(t_philosopher *philo);
 void				mutex_end(t_philosopher *philo, bool end);
 void				take_forks(t_philosopher *philo);
 int					intput_check(int argc, char **argv);
+void				simu_one(t_data *data);
 
 #endif

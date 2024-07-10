@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:58:36 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/10 16:06:38 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/10 16:24:11 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ bool	ft_strncmp(char *msg, char *cmp, int len)
 
 int	message(t_philosopher *philo, char *msg)
 {
-	struct timeval	tv;
-
 	pthread_mutex_lock(philo->message);
 	pthread_mutex_lock(philo->end_mutex);
 	if (*philo->end == true && ft_strncmp(msg, "died", 4) == false)
