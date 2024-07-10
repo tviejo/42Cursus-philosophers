@@ -1,6 +1,6 @@
 NAME		=	philo
  
-SRC		=	close.c eating.c ft_atoi.c init.c main.c philosophers.c sleep.c utils.c mutex_utils.c \
+SRC		=	close.c eating.c ft_atoi.c init.c main.c philosophers.c time_utils.c mutex_utils.c \
 				input_check.c message.c special_case.c
 
 OBJS		=	${SRC:.c=.o}

@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:04:55 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/10 16:36:15 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/10 17:27:59 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int					dead_philo(t_data *data);
 bool				everyone_ate(t_data *data);
 bool				end_is_true_data(t_data *data);
 bool				end_is_true_philo(t_philosopher *philo);
-int					custom_sleep(t_philosopher *philo, long time);
 long int			custom_time(void);
 void				mutex_is_not_eating(t_philosopher *philo,
 						bool is_not_eating);
@@ -81,5 +80,10 @@ void				mutex_end(t_philosopher *philo, bool end);
 void				take_forks(t_philosopher *philo);
 int					intput_check(int argc, char **argv);
 void				simu_one(t_data *data);
+void				check_end(t_data *data);
+int					init_mutex(t_data *data);
+int					init_fork(t_data *data);
+void				custom_sleep_eating(t_philosopher *philo);
+void				custom_sleep_sleeping(t_philosopher *philo, long int time);
 
 #endif

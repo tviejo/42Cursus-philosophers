@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:58:36 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/10 16:24:11 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/10 17:01:17 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	message(t_philosopher *philo, char *msg)
 		pthread_mutex_unlock(philo->end_mutex);
 		return (EXIT_FAILURE);
 	}
-	printf("%ld Philosopher %d %s\n", (custom_time() - *philo->start_time),
+	printf("%ld %d %s\n", (custom_time() - *philo->start_time),
 		philo->id, msg);
 	pthread_mutex_unlock(philo->message);
 	pthread_mutex_unlock(philo->end_mutex);

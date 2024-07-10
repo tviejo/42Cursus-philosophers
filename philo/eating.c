@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:58:07 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/10 16:22:15 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/10 17:29:18 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,11 @@ bool	everyone_ate(t_data *data)
 
 int	sleeping(t_philosopher *philo)
 {
+	long	time;
+
+	time = custom_time();
 	message(philo, "is sleeping");
-	custom_sleep(philo, philo->time_to_sleep);
+	custom_sleep_sleeping(philo, time);
 	return (EXIT_SUCCESS);
 }
 
@@ -66,10 +69,10 @@ int	eating(void *philo_ptr)
 	if (end_is_true_philo(philo) == true)
 		return (EXIT_SUCCESS);
 	take_forks(philo);
+	philo->time_of_last_meal = custom_time();
 	mutex_is_not_eating(philo, false);
 	message(philo, "is eating");
-	custom_sleep(philo, philo->time_to_eat);
-	philo->time_of_last_meal = custom_time();
+	custom_sleep_eating(philo);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
 	mutex_nbr_of_meals(philo);
