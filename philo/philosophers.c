@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:58:51 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/10 18:53:36 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/11 10:18:20 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	philosophers(t_data *data)
 	int	i;
 
 	i = 0;
+	init_time(data);
 	while (i < data->number_of_philo)
 	{
 		pthread_create(&data->philo[i].thread, NULL, &living_philo,

@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:04:55 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/10 17:27:59 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/11 10:08:52 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,6 @@ int					init_mutex(t_data *data);
 int					init_fork(t_data *data);
 void				custom_sleep_eating(t_philosopher *philo);
 void				custom_sleep_sleeping(t_philosopher *philo, long int time);
+void				init_time(t_data *data);
 
 #endif

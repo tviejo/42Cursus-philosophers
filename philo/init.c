@@ -6,7 +6,7 @@
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:58:22 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/10 18:31:49 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/11 10:15:05 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ int	init_philosophers(t_data *data)
 	i = 0;
 	while (i < data->number_of_philo)
 	{
-		data->philo[i].start_time = &data->start_time;
 		data->philo[i].id = i + 1;
-		data->philo[i].time_of_last_meal = data->start_time;
 		data->philo[i].nbr_of_meals = 0;
 		data->philo[i].is_not_eating = true;
 		data->philo[i].end = &data->end;
 		data->philo[i].time_to_eat = data->time_to_eat;
 		data->philo[i].time_to_sleep = data->time_to_sleep;
+		data->philo[i].start_time = &data->start_time;
+		data->philo[i].time_of_last_meal = data->start_time;
 		pthread_mutex_init(&data->philo[i].time_of_last_meal_mutex, NULL);
 		pthread_mutex_init(&data->philo[i].nbr_of_meals_mutex, NULL);
 		pthread_mutex_init(&data->philo[i].is_not_eating_mutex, NULL);

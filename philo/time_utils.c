@@ -1,16 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   time_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:59:08 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/10 17:30:00 by tviejo           ###   ########.fr       */
+/*   Updated: 2024/07/11 10:22:43 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	init_time(t_data *data)
+{
+	int	i;
+
+	data->start_time = custom_time();
+	i = 0;
+	while (i < data->number_of_philo)
+	{
+		data->philo[i].start_time = &data->start_time;
+		data->philo[i].time_of_last_meal = data->start_time;
+		i++;
+	}
+}
 
 long int	custom_time(void)
 {
@@ -32,7 +46,7 @@ void	custom_sleep_eating(t_philosopher *philo)
 
 void	custom_sleep_sleeping(t_philosopher *philo, long int time)
 {
-	while (custom_time() - time < philo->time_to_eat)
+	while (custom_time() - time < philo->time_to_sleep)
 	{
 		usleep(10);
 	}
