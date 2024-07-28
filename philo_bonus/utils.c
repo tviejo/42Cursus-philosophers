@@ -11,8 +11,9 @@ long int    current_time(void)
 void print_message(t_philosopher *philo, char *message)
 {
     sem_wait(philo->info->message);
-        printf("%lld %d %s\n", current_time() - philo->info->start_time, philo->id, message);
-    sem_post(philo->info->message);
+    printf("%lld %d %s\n", current_time() - philo->info->start_time, philo->id, message);
+    if (strcmp(message, "died") != 0)
+        sem_post(philo->info->message);
 }
 
 void msleep(int ms)

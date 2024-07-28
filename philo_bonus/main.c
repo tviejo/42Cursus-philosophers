@@ -11,9 +11,11 @@ static int init_info(t_info *info, int argc, char **argv)
     sem_unlink("/message");
     sem_unlink("/death");
     sem_unlink("/all_eaten");
+    sem_unlink("/lock");
     info->forks = sem_open("/forks", O_CREAT | O_EXCL, 0644, info->num_philosophers);
     info->message = sem_open("/message", O_CREAT | O_EXCL, 0644, 1);
     info->death = sem_open("/death", O_CREAT | O_EXCL, 0644, 0);
+    info->lock = sem_open("/lock", O_CREAT | O_EXCL, 0644, 1);
     if (info->forks == SEM_FAILED || info->message == SEM_FAILED || info->death == SEM_FAILED)
         return (1);
     info->start_time = current_time();

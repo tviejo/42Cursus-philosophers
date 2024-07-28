@@ -17,17 +17,22 @@ void put_forks(t_philosopher *philo)
 void eat(t_philosopher *philo)
 {
     take_forks(philo);
+    sem_wait(philo->info->lock);
     philo->last_meal = current_time();
     philo->times_eaten++;
+    sem_post(philo->info->lock);
     print_message(philo, "is eating");
-    msleep(philo->info->time_to_eat);
+    custom_sleep_eating(philo->last_meal, philo->info->time_to_eat);
     put_forks(philo);
 }
 
 void sleep_and_think(t_philosopher *philo)
 {
+    long timestamp;
+
+    timestamp = current_time();
     print_message(philo, "is sleeping");
-    msleep(philo->info->time_to_sleep);
+    custom_sleep_sleeping(timestamp, philo->info->time_to_sleep);
 }
 
 
@@ -38,12 +43,15 @@ void *check_death(void *philosopher)
 	philo = (t_philosopher *)philosopher;
     while (1)
     {
+        sem_wait(philo->info->lock);
         if ((current_time() - philo->last_meal) > philo->info->time_to_die)
         {
             sem_post(philo->info->death);
             print_message(philo, "died");
             exit(1);
         }
+        sem_post(philo->info->lock);
+        usleep(100);   
     }
     return (NULL);
 }
@@ -62,6 +70,5 @@ void philosopher(t_philosopher *philo)
             philo->times_eaten >= philo->info->num_times_each_philosopher_must_eat)
             exit(0);
         sleep_and_think(philo);
-        
     }
 }

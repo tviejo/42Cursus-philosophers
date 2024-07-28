@@ -1,21 +1,46 @@
-NAME = philo_bonus
+NAME		=	philo_bonus
+ 
+SRC		=	main.c monitor.c philosopher.c utils.c utils2.c time.c
 
-SRCS = main.c philosopher.c utils.c monitor.c
-OBJS = $(SRCS:.c=.o)
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+OBJS		=	${SRC:.c=.o}
 
-all: $(NAME)
+CC				=       cc
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -lpthread
+CFLAGS          =       -g3 -Wall -Wextra -Werror
+
+RM				=       rm -f
+
+GREEN=\033[0;32m
+RED=\033[0;31m
+BLUE=\033[0;34m
+END=\033[0m
+BOLD_START=\e[1m
+BOLD_END=\e[0m
+
+ifeq ($(debug), true)
+        CFLAGS += -g3 -pthread -fsanitize=thread -g
+endif
+
+all:                    $(LIB) ${NAME}
+							@echo "$(GREEN)$(BOLD_START)${NAME} created$(BOLD_END)$(END)"
+
+${NAME}:               	${OBJS}
+							$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+
+$(OBJS):                $(OBJ_DIR)%.o: %.c
+							@echo "$(BLUE)Compiling: $@ $(END)"
+							$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+						$(RM) -r $(OBJ_DIR)
+						${RM} ${OBJS}
+						@echo "$(GREEN)$(BOLD_START)Clean done$(BOLD_END)$(END)"
 
 fclean: clean
-	rm -f $(NAME)
+						${RM} ${NAME}
+						@echo "$(GREEN)$(BOLD_START)Fclean done$(BOLD_END)$(END)"
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus libft
+.SILENT:
