@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.c                                             :+:      :+:    :+:   */
+/*   check_death.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/28 22:01:24 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/28 22:11:59 by tviejo           ###   ########.fr       */
+/*   Created: 2024/07/28 22:01:06 by tviejo            #+#    #+#             */
+/*   Updated: 2024/07/28 22:07:19 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void	custom_sleep_eating(long time_last_meal, long time_to_eat)
+void	*check_death(void *philosopher)
 {
-	while (current_time() - time_last_meal < time_to_eat)
-	{
-		usleep(10);
-	}
-}
+	t_philosopher	*philo;
 
-void	custom_sleep_sleeping(long timestamp, long time_to_sleep)
-{
-	while (current_time() - timestamp < time_to_sleep)
+	philo = (t_philosopher *)philosopher;
+	while (1)
 	{
-		usleep(10);
+		sem_wait(philo->info->lock);
+		if ((current_time() - philo->last_meal) > philo->info->time_to_die)
+		{
+			sem_post(philo->info->death);
+			print_message(philo, "died");
+			exit(1);
+		}
+		sem_post(philo->info->lock);
+		usleep(100);
 	}
+	return (NULL);
 }

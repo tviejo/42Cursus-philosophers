@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/28 22:01:27 by tviejo            #+#    #+#             */
+/*   Updated: 2024/07/28 22:08:04 by tviejo           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_bonus.h"
 
-long int    current_time(void)
+long int	current_time(void)
 {
 	struct timeval	tv;
 
@@ -8,35 +20,35 @@ long int    current_time(void)
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-void print_message(t_philosopher *philo, char *message)
+void	print_message(t_philosopher *philo, char *message)
 {
-    sem_wait(philo->info->message);
-    printf("%lld %d %s\n", current_time() - philo->info->start_time, philo->id, message);
-    if (strcmp(message, "died") != 0)
-        sem_post(philo->info->message);
+	sem_wait(philo->info->message);
+	printf("%lld %d %s\n", current_time() - philo->info->start_time, philo->id,
+		message);
+	if (strcmp(message, "died") != 0)
+		sem_post(philo->info->message);
 }
 
-void msleep(int ms)
+void	cleanup(t_info *info)
 {
-    usleep(ms * 1000);
+	sem_close(info->forks);
+	sem_close(info->message);
+	sem_close(info->death);
+	sem_close(info->lock);
+	sem_unlink("/forks");
+	sem_unlink("/message");
+	sem_unlink("/death");
+	sem_unlink("/lock");
 }
 
-void cleanup(t_info *info)
+void	terminate_simulation(t_philosopher *philosophers, t_info *info)
 {
-    sem_close(info->forks);
-    sem_close(info->message);
-    sem_close(info->death);
-    sem_unlink("/forks");
-    sem_unlink("/message");
-    sem_unlink("/death");
-}
+	int	i;
 
-void terminate_simulation(t_philosopher *philosophers, t_info *info)
-{
-    int i;
-
-    for (i = 0; i < info->num_philosophers; i++)
-    {
-        kill(philosophers[i].pid, SIGKILL);
-    }
+	i = 0;
+	while (i < info->num_philosophers)
+	{
+		kill(philosophers[i].pid, SIGKILL);
+		i++;
+	}
 }

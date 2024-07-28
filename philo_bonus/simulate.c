@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.c                                             :+:      :+:    :+:   */
+/*   simulate.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tviejo <tviejo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/28 22:01:24 by tviejo            #+#    #+#             */
-/*   Updated: 2024/07/28 22:11:59 by tviejo           ###   ########.fr       */
+/*   Created: 2024/07/28 22:01:21 by tviejo            #+#    #+#             */
+/*   Updated: 2024/07/28 22:08:21 by tviejo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void	custom_sleep_eating(long time_last_meal, long time_to_eat)
+void	start_simulation(t_info *info, t_philosopher *philosophers)
 {
-	while (current_time() - time_last_meal < time_to_eat)
-	{
-		usleep(10);
-	}
-}
+	int	i;
 
-void	custom_sleep_sleeping(long timestamp, long time_to_sleep)
-{
-	while (current_time() - timestamp < time_to_sleep)
+	i = 0;
+	while (i < info->num_philosophers)
 	{
-		usleep(10);
+		philosophers[i].pid = fork();
+		if (philosophers[i].pid < 0)
+		{
+			terminate_simulation(philosophers, info);
+			return ;
+		}
+		if (philosophers[i].pid == 0)
+			philosopher(&philosophers[i]);
+		i++;
 	}
+	if (waitpid(-1, NULL, 0) || sem_wait(info->death))
+		terminate_simulation(philosophers, info);
 }

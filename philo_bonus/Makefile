@@ -1,6 +1,6 @@
 NAME		=	philo_bonus
  
-SRC		=	main.c monitor.c philosopher.c utils.c utils2.c time.c
+SRC		=	main.c philosopher.c utils.c time.c simulate.c init.c check_death.c
 
 OBJS		=	${SRC:.c=.o}
 
